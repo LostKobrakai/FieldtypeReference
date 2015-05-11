@@ -1,6 +1,6 @@
 # Fieldtype Reference
 
-This fieldtype provides a way to include data to a page, which is retrieved from a page related to the current one. This is done in two steps. First each fields needs a PHP snippet, which will return the page, which holds the field, that you want to provide a reference to. The second step is providing pairs of templates and fields. There you can set which field will be referenced depending on which template the selected page is of. It's kinda like a one way symlink to a remote field.
+This fieldtype provides a way to include a reference to a field to a page, which the field's data is retrieved from a somehow related remote page. This is done in two steps. Each field needs a PHP snippet, which will return the remote page, that holds the field, that you want to provide a reference to. The second step is providing pairs of templates and fields. There you can set which field will be referenced, depending on which template the selected page is of. It's kinda like a one way symlink to a remote field.
 
 ## Example
 
