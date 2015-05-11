@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * ProcessWire Inputfield, that references a value of a remote field.
+ *
+ * @author Benjamin Milde
+ *
+ * ProcessWire 2.x 
+ * Copyright (C) 2015 by Ryan Cramer 
+ * Licensed under GNU/GPL v2, see LICENSE.TXT
+ * 
+ * http://processwire.com
+ *
+ */
+
+class InputfieldReference extends Inputfield {
+
+	protected $allowedCollapsedModes = array(
+		Inputfield::collapsedNoLocked,
+		Inputfield::collapsedYesLocked,
+		Inputfield::collapsedHidden,
+	);
+
+	public static function getModuleInfo() {
+		return array(
+			'title' => 'Reference',
+			'version' => "0.0.1",
+			'summary' => 'Shows the value of a field, that lives in a related page of the current.',
+			'author' => "Benjamin Milde",
+   		'autoload' => false,
+    	'singular' => false,
+    	'requires' => "FieldtypeReference"
+			);
+	}
+
+	public function init() {
+		$this->set("referencePage", "");
+		$this->set("referenceField", "");
+	}
+
+	public function ___render() {
+		$page = $this->get("referencePage");
+		$field = $this->get("referenceField");
+
+		if(!$page || !$field) { 
+			$this->error("Not fully configured  / currently nonfunctional");
+			return "";
+		}
+
+		if(($val = $page->get($field)) instanceof Page) return $val->title;
+
+		$input = $this->fields->get($field)->getInputfield($page);
+		$input->value = $val;
+
+		return $input->renderValue();
+	}
+
+	public function renderValue(){
+		return $this->___render();
+	}
+
+	public function ___getConfigInputfields() {
+		$inputfields = parent::___getConfigInputfields();
+		$collapsed = clone $inputfields->get("collapsed");
+		$inputfields->remove($inputfields->get("collapsed")->parent);
+
+		$collapsed->collapsed = Inputfield::collapsedYes;
+		$options = $collapsed->getOptions();
+		foreach(array_keys($options) as $key){
+			$collapsed->removeOption($key);
+		}
+		foreach($this->allowedCollapsedModes as $key){
+			$collapsed->addOption($key, $options[$key]);
+		}
+		$collapsed->icon = "eye";
+		$collapsed->defaultValue = $this->allowedCollapsedModes[0];
+		$collapsed->required = true;
+
+		$inputfields->insertBefore($collapsed, $inputfields->get("columnWidth"));
+		$inputfields->remove($inputfields->get("required"));
+		$inputfields->remove($inputfields->get("requiredIf"));
+
+		return $inputfields;
+	}
+
+}

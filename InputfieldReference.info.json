@@ -1,0 +1,15 @@
+{
+    "title": "Reference",
+    "version": "0.0.1",
+    "summary": "Shows the value of a field, that lives in a related page of the current.",
+    "author": "Benjamin Milde",
+    "href": "",
+    "permission": [],
+    "autoload": false,
+    "singular": false,
+    "permanent": false,
+    "requires": [
+        "FieldtypeReference"
+    ],
+    "installs": []
+}
