@@ -38,7 +38,7 @@ reference=1
 
 Page fields can be dynamically limited by fields of the same page. Imaging a page field, which lets you select a list of shoes. Now we can limit the selectable shoes by any field related to the page the shoe pagefield is on.
 ```
-template=shoes, brand=reference
+template=shoes, brand=page.reference
 ```
 
 `reference` is in this case a link to a field, which returns a brand-`Page`-object.

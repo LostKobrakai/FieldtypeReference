@@ -43,7 +43,7 @@ class InputfieldReference extends Inputfield {
 		$field = $this->get("referenceField");
 
 		if(!$page || !$field) { 
-			$this->error("Not fully configured  / currently nonfunctional");
+			$this->error($this->_("Not fully configured  / currently nonfunctional"));
 			return "";
 		}
 

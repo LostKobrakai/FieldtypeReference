@@ -124,7 +124,7 @@ class FieldtypeReference extends Fieldtype {
 		}
 
 		if($error){
-			$this->error("Invalid line found for fieldsPerTemplate.");
+			$this->error($this->_("Invalid line found for fieldsPerTemplate."));
 			$field->set("fieldsPerTemplate", implode("\n", $lines))->save();
 		}
 
